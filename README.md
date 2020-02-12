@@ -271,6 +271,7 @@ terraform destroy
 | kms\_deletion\_window\_in\_days | Key rotation window, set to 0 for no rotation. Only used when `enable\_kms` is set to `true`. | number | `"7"` | no |
 | kms\_key\_id | KMS key id to encrypted the CloudWatch logs. Ensure CloudWatch has access to the provided KMS key. | string | `""` | no |
 | overrides | This maps provides the possibility to override some defaults. The following attributes are supported: `name\_sg` overwrite the `Name` tag for all security groups created by this module. `name\_runner\_agent\_instance` override the `Name` tag for the ec2 instance defined in the auto launch configuration. `name\_docker\_machine\_runners` ovverrid the `Name` tag spot instances created by the runner agent. | map(string) | `<map>` | no |
+| metrics\_security\_group\_id | ID of security group for prometheus to be scraping metrics from. | string | "" | no |
 | runner\_ami\_filter | List of maps used to create the AMI filter for the Gitlab runner docker-machine AMI. | map(list(string)) | `<map>` | no |
 | runner\_ami\_owners | The list of owners used to select the AMI of Gitlab runner docker-machine instances. | list(string) | `<list>` | no |
 | runner\_instance\_spot\_price | By setting a spot price bid price the runner agent will be created via a spot request. Be aware that spot instances can be stopped by AWS. | string | `""` | no |

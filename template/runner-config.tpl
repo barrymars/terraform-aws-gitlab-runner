@@ -1,5 +1,6 @@
 concurrent = ${runners_concurrent}
 check_interval = 0
+${metrics_listen_address}
 
 [[runners]]
   name = "${runners_name}"

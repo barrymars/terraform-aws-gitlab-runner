@@ -514,3 +514,9 @@ variable "enable_forced_updates" {
   default     = false
   type        = bool
 }
+
+variable "metrics_security_group_id" {
+  description = "Security group id metrics scraping is connecting from"
+  type        = string
+  default     = ""
+}

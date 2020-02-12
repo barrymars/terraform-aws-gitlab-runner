@@ -37,6 +37,16 @@ resource "aws_security_group_rule" "runner_ssh" {
   security_group_id = aws_security_group.runner.id
 }
 
+resource "aws_security_group_rule" "runner_metrics" {
+  count = var.metrics_security_group_id == "" ? 0 : 1
+  type        = "ingress"
+  from_port   = 9999
+  to_port     = 9999
+  protocol    = "tcp"
+  source_security_group_id = var.metrics_security_group_id
+  security_group_id = aws_security_group.runner.id
+}
+
 resource "aws_security_group" "docker_machine" {
   name_prefix = "${var.environment}-docker-machine"
   vpc_id      = var.vpc_id
@@ -249,6 +259,7 @@ data "template_file" "runners" {
     runners_services_volumes_tmpfs    = chomp(join("", data.template_file.services_volumes_tmpfs.*.rendered))
     bucket_name                       = local.bucket_name
     shared_cache                      = var.cache_shared
+    metrics_listen_address            = local.metrics_listen_address
   }
 }
 
