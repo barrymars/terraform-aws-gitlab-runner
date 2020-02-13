@@ -3,8 +3,8 @@ locals {
 
   // Convert list to a string separated and prepend by a comma
   docker_machine_options_string = format(
-    ",%s%s",
-    join(",", formatlist("%q", var.docker_machine_options)),
+    ",%s",
+    join(",", formatlist("%q", var.docker_machine_options))
   )
 
   // Ensure off peak is optional
