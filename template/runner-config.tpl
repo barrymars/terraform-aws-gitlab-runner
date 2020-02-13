@@ -57,6 +57,7 @@ ${metrics_listen_address}
       "amazonec2-root-size=${runners_root_size}",
       "amazonec2-ami=${runners_ami}"
       ${docker_machine_options}
+      ${docker_machine_nvme_option}
     ]
     OffPeakTimezone = "${runners_off_peak_timezone}"
     OffPeakIdleCount = ${runners_off_peak_idle_count}
