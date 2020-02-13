@@ -5,6 +5,8 @@ if [[ $(echo ${user_data_trace_log}) == false ]]; then
   set -x
 fi
 
+${docker_machine_runner_userdata_file}
+
 # Add current hostname to hosts file
 tee /etc/hosts <<EOL
 127.0.0.1   localhost localhost.localdomain $(hostname)

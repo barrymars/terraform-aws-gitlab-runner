@@ -357,6 +357,12 @@ variable "docker_machine_role_json" {
   default     = ""
 }
 
+variable "docker_machine_mount_nvme" {
+  description = "Whether or not to mount an nvme device to the docker-machine instaces"
+  type        = bool
+  default     = false
+}
+
 variable "ami_filter" {
   description = "List of maps used to create the AMI filter for the Gitlab runner agent AMI. Currently Amazon Linux 2 `amzn2-ami-hvm-2.0.????????-x86_64-ebs` looks to *not* be working for this configuration."
   type        = map(list(string))

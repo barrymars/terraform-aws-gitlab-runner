@@ -1,8 +1,10 @@
 locals {
+  docker_machine_mount_nvme_option = var.docker_machine_mount_nvme == "true" : ",amazonec2-userdata=/tmp/docker-machine-user-data" ? ""
   // Convert list to a string separated and prepend by a comma
   docker_machine_options_string = format(
-    ",%s",
+    ",%s%s",
     join(",", formatlist("%q", var.docker_machine_options)),
+    docker_machine_mount_nvme_option,
   )
 
   // Ensure off peak is optional

@@ -131,6 +131,14 @@ resource "null_resource" "remove_runner" {
   }
 }
 
+data "template_file" "docker_machine_userdata" {
+  template = file("${path.module}/template/docker-machine-user-data.tpl")
+
+  vars = {
+    mount_nvme = var.docker_machine_mount_nvme
+  }
+}
+
 data "template_file" "user_data" {
   template = file("${path.module}/template/user-data.tpl")
 
@@ -139,6 +147,7 @@ data "template_file" "user_data" {
     logging             = var.enable_cloudwatch_logging ? data.template_file.logging.rendered : ""
     gitlab_runner       = data.template_file.gitlab_runner.rendered
     user_data_trace_log = var.enable_runner_user_data_trace_log
+    docker_machine_runner_userdata_file = data.template.docker_machine_userdata.rendered
   }
 }
 
