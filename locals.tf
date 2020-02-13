@@ -5,7 +5,7 @@ locals {
   docker_machine_options_string = format(
     ",%s%s",
     join(",", formatlist("%q", var.docker_machine_options)),
-    docker_machine_mount_nvme_option,
+    local.docker_machine_mount_nvme_option,
   )
 
   // Ensure off peak is optional
