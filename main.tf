@@ -139,7 +139,7 @@ data "template_file" "docker_machine_userdata" {
   }
 }
 
-data "template_file" "user_data" {
+data "template_file" "docker_machine_user_data" {
   template = file("${path.module}/template/user-data.tpl")
 
   vars = {
