@@ -1,5 +1,5 @@
 locals {
-  docker_machine_userdata = var.docker_machine_docker_drive == "" ? "" : ",\"amazonec2-userdata=/tmp/docker-machine-user-data\""
+  docker_machine_userdata = var.docker_machine_docker_device == "" ? "" : ",\"amazonec2-userdata=/tmp/docker-machine-user-data\""
 
   // Convert list to a string separated and prepend by a comma
   docker_machine_options_string = format(
