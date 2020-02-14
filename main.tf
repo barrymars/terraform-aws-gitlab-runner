@@ -135,7 +135,7 @@ data "template_file" "docker_machine_userdata" {
   template = file("${path.module}/template/docker-machine-user-data.tpl")
 
   vars = {
-    mount_nvme = var.docker_machine_mount_nvme
+    docker_device = var.docker_machine_docker_device
   }
 }
 
@@ -226,7 +226,7 @@ data "template_file" "runners" {
     runners_instance_profile    = aws_iam_instance_profile.docker_machine.name
     runners_additional_volumes  = local.runners_additional_volumes
     docker_machine_options      = length(var.docker_machine_options) == 0 ? "" : local.docker_machine_options_string
-    docker_machine_nvme_option  = local.docker_machine_nvme_option
+    docker_machine_userdata     = local.docker_machine_userdata
     runners_name                = var.runners_name
     runners_tags = var.overrides["name_docker_machine_runners"] == "" ? format(
       "Name,%s-docker-machine,%s,%s",

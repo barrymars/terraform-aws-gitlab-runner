@@ -357,10 +357,10 @@ variable "docker_machine_role_json" {
   default     = ""
 }
 
-variable "docker_machine_mount_nvme" {
-  description = "Whether or not to mount an nvme device to the docker-machine instaces"
-  type        = bool
-  default     = false
+variable "docker_machine_docker_device" {
+  description = "Name of a block device to mount to /var/lib/docker"
+  type        = string
+  default     = ""
 }
 
 variable "ami_filter" {
