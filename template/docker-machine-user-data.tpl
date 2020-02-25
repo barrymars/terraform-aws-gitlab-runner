@@ -1,5 +1,5 @@
 if [[ $(echo ${docker_device}) != "" ]]; then
-    tee /etc/gitlab-runner/docker-machine-user-data <<EOL
+    tee /root/docker-machine-user-data <<EOL
 #!/bin/bash -e
 mkdir -p /var/lib/docker
 mkfs.ext4 ${docker_device}
