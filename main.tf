@@ -136,6 +136,7 @@ data "template_file" "docker_machine_userdata" {
 
   vars = {
     docker_device = var.docker_machine_docker_device
+    efs_dns_name = aws_efs_file_system.efs.dns_name
   }
 }
 
@@ -404,6 +405,82 @@ module "cache" {
 }
 
 ################################################################################
+### Create EFS volume for docker cache
+################################################################################
+resource "aws_security_group" "efs" {
+  count = var.enable_efs_docker_cache ? 1 : 0
+
+  name = "${var.runners_name}-efs"
+  description = "Allow NFS traffic"
+  vpc_id = var.vpc_id
+
+  lifecycle {
+    create_before_destroy = true
+  }
+
+  ingress {
+    from_port = 2049
+    to_port = 2049
+    protocol = "tcp"
+    source_security_group_id = aws_security_group.runner.id
+  }
+
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = local.tags
+}
+
+resource "aws_efs_file_system" "efs" {
+  count = var.enable_efs_docker_cache ? 1 : 0
+
+  create_token = var.runners_name
+  performance_mode = var.efs_performance_mode
+  encrypted = "true"
+
+  tags = local.tags
+}
+
+resource "aws_efs_mount_target" "efs" {
+  count = var.enable_efs_docker_cache ? "${length(var.subnet_id_runners)}" : 0
+
+  file_system_id = aws_efs_file_system.efs.id
+  subnet_id = "${element(var.subnet_id_runners, count.index)}"
+  security_groups = [aws_security_group.efs.id]
+}
+
+data "template_file" "docker_machine_efs_policy" {
+  count = var.enable_efs_docker_cache ? 1 : 0
+
+  template = file("${path.module}/policies/efs.json")
+
+  vars = {
+    efs_cache_arn = aws_efs_file_system.efs.arn
+  }
+}
+
+resource "aws_iam_policy" "efs_cache" {
+  count = var.enable_efs_docker_cache ? 1 : 0
+
+  name        = "${var.environment}-efs-cache"
+  path        = "/"
+  description = "Policy for docker machine instance to access EFS cache"
+
+  policy = data.template_file.docker_machine_efs_policy.rendered
+}
+
+resource "aws_iam_role_policy_attachment" "instance_efs_cache_policy" {
+  count = var.enable_efs_docker_cache ? 1 : 0
+
+  role       = aws_iam_role.docker_machine.name
+  policy_arn = aws_iam_policy.efs_cache.arn
+}
+
+################################################################################
 ### Trust policy
 ################################################################################
 resource "aws_iam_instance_profile" "instance" {
@@ -477,7 +554,6 @@ resource "aws_iam_role_policy_attachment" "instance_session_manager_aws_managed"
   role       = aws_iam_role.instance.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
-
 
 ################################################################################
 ### Policy for the docker machine instance to access cache

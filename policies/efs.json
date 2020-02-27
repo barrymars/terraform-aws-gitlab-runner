@@ -1,0 +1,15 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "allowGitLabRunnersAccessEFSCache",
+      "Effect": "Allow",
+      "Action": [
+        "elasticfilesystem:DescribeFileSystems"
+      ],
+      "Resource": [
+        "${efs_cache_arn}/*"
+      ]
+    }
+  ]
+}

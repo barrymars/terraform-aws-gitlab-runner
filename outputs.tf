@@ -47,3 +47,23 @@ output "runner_eip" {
   description = "EIP of the Gitlab Runner"
   value       = element(concat(aws_eip.gitlab_runner.*.public_ip, [""]), 0)
 }
+
+output "runner_efs" {
+  value = aws_efs_file_system.efs.id
+}
+
+output "runner_efs_security_group_id" {
+  value = aws_security_group.efs.id
+}
+
+output "runner_efs_dns_name" {
+  value = aws_efs_file_system.efs.dns_name
+}
+
+output "runner_efs_mount_target_ids" {
+  value = "${join(',', aws_efs_mount_target.efs.*.id)}"
+}
+
+output "runner_efs_interface_ids" {
+  value = "${join(',', aws_efs_mount_target.efs.*.network_interface_id)}"
+}

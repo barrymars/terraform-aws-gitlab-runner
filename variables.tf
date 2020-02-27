@@ -526,3 +526,15 @@ variable "metrics_security_group_id" {
   type        = string
   default     = ""
 }
+
+variable "efs_performance_mode" {
+  description = "The performance mode of the filesystem"
+  type        = string
+  default     = "generalPurpose"
+}
+
+variable "enable_efs_docker_cache" {
+  description = "Enable use of an EFS volume for docker cache on runners"
+  type        = bool
+  default     = false
+}
