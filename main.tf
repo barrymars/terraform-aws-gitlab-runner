@@ -48,7 +48,7 @@ resource "aws_security_group_rule" "runner_metrics" {
 }
 
 resource "aws_security_group_rule" "runner_metrics_public" {
-  count = var.metrics_public == true ? 0 : 1
+  count = var.metrics_public == true ? 1 : 0
   type        = "ingress"
   from_port   = 9999
   to_port     = 9999
