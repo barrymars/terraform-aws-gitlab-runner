@@ -11,7 +11,7 @@ locals {
     var.tags,
   )
 
-  cache_bucket_name = var.cache_bucket_name_include_account_id ? "${var.cache_bucket_prefix}${data.aws_caller_identity.current.account_id}-${var.region}-gitlab-runner-cache" : "${var.cache_bucket_prefix}-gitlab-runner-cache"
+  cache_bucket_name = var.cache_bucket_name_include_account_id ? "${var.cache_bucket_prefix}${data.aws_caller_identity.current.account_id}-gitlab-runner-cache" : "${var.cache_bucket_prefix}-gitlab-runner-cache"
 }
 
 resource "aws_s3_bucket" "build_cache" {
