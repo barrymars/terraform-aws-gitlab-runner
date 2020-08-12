@@ -527,7 +527,7 @@ variable "metrics_security_group_id" {
   default     = ""
 }
 
-variable "public_metrics" {
+variable "metrics_public" {
   description = "Enable access to metrics from the internet"
   default     = false
   type        = bool
