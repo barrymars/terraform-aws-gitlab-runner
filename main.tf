@@ -47,6 +47,16 @@ resource "aws_security_group_rule" "runner_metrics" {
   security_group_id = aws_security_group.runner.id
 }
 
+resource "aws_security_group_rule" "runner_metrics_public" {
+  count = var.public_metrics == true ? 0 : 1
+  type        = "ingress"
+  from_port   = 9999
+  to_port     = 9999
+  protocol    = "tcp"
+  cidr_blocks = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.runner.id
+}
+
 resource "aws_security_group" "docker_machine" {
   name_prefix = "${var.environment}-docker-machine"
   vpc_id      = var.vpc_id

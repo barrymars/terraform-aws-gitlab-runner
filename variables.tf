@@ -526,3 +526,10 @@ variable "metrics_security_group_id" {
   type        = string
   default     = ""
 }
+
+variable "public_metrics" {
+  description = "Enable access to metrics from the internet"
+  default     = false
+  type        = bool
+}
+
