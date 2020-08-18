@@ -3,11 +3,6 @@ variable "environment" {
   type        = string
 }
 
-variable "profile" {
-  description = "AWS Provider profile"
-  type        = string
-}
-
 variable "cache_bucket_prefix" {
   description = "Prefix for s3 cache bucket name."
   type        = string
@@ -43,10 +38,3 @@ variable "create_cache_bucket" {
   type        = bool
   default     = true
 }
-
-variable "cache_region" {
-  description = "Region of a shared global cache"
-  type        = string
-  default     = ""
-}
-
