@@ -3,6 +3,11 @@ variable "environment" {
   type        = string
 }
 
+variable "profile" {
+  description = "AWS Provider profile"
+  type        = string
+}
+
 variable "cache_bucket_prefix" {
   description = "Prefix for s3 cache bucket name."
   type        = string
