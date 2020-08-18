@@ -3,6 +3,11 @@ variable "aws_region" {
   type        = string
 }
 
+variable "cache_region" {
+  description = "Region of a shared global cache"
+  type        = string
+}
+
 variable "aws_zone" {
   description = "AWS availability zone (typically 'a', 'b', or 'c')."
   type        = string

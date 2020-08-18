@@ -17,6 +17,8 @@ locals {
 resource "aws_s3_bucket" "build_cache" {
   count = var.create_cache_bucket ? 1 : 0
 
+  region = var.cache_region == "" ? var.aws_region : var.cache_region
+
   bucket = local.cache_bucket_name
   acl    = "private"
 
