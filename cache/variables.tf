@@ -38,3 +38,10 @@ variable "create_cache_bucket" {
   type        = bool
   default     = true
 }
+
+variable "cache_region" {
+  description = "Region of a shared global cache"
+  type        = string
+  default     = ""
+}
+
