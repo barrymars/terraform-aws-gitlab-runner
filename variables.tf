@@ -3,6 +3,11 @@ variable "aws_region" {
   type        = string
 }
 
+variable "profile" {
+  description = "AWS Provider profile"
+  type        = string
+}
+
 variable "cache_region" {
   description = "Region of a shared global cache"
   type        = string
