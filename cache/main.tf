@@ -1,5 +1,7 @@
 provider "aws" {
+  version = "~> 2.19.0"
   region = var.cache_region
+  profile = var.profile
 }
 
 data "aws_caller_identity" "current" {}
