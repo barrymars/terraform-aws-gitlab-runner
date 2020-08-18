@@ -6,6 +6,7 @@ variable "aws_region" {
 variable "cache_region" {
   description = "Region of a shared global cache"
   type        = string
+  default     = ""
 }
 
 variable "aws_zone" {
