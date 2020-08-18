@@ -1,3 +1,7 @@
+provider "aws" {
+  region = var.cache_region
+}
+
 data "aws_caller_identity" "current" {}
 
 locals {
