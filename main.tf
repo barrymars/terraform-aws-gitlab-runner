@@ -411,6 +411,7 @@ module "cache" {
   cache_bucket_name_include_account_id = var.cache_bucket_name_include_account_id
   cache_bucket_versioning              = var.cache_bucket_versioning
   cache_expiration_days                = var.cache_expiration_days
+  cache_arn                            = var.cache_arn
 }
 
 ################################################################################

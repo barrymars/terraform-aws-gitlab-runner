@@ -15,7 +15,7 @@ locals {
 }
 
 resource "aws_s3_bucket" "build_cache" {
-  count = var.create_cache_bucket ? 1 : 0
+  count = var.create_cache_bucket && var.cache_arn == "" ? 1 : 0
 
   bucket = local.cache_bucket_name
   acl    = "private"
@@ -56,12 +56,12 @@ data "template_file" "docker_machine_cache_policy" {
   template = file("${path.module}/policies/cache.json")
 
   vars = {
-    s3_cache_arn = var.create_cache_bucket == false || length(aws_s3_bucket.build_cache) == 0 ? "arn:aws:s3:::fake_bucket_doesnt_exist" : aws_s3_bucket.build_cache[0].arn
+    s3_cache_arn = var.cache_arn == "" ? (var.create_cache_bucket == false || length(aws_s3_bucket.build_cache) == 0 ? "arn:aws:s3:::fake_bucket_doesnt_exist" : aws_s3_bucket.build_cache[0].arn) : var.cache_arn
   }
 }
 
 resource "aws_iam_policy" "docker_machine_cache" {
-  count = var.create_cache_bucket ? 1 : 0
+  count = var.create_cache_bucket || var.cache_arn != "" ? 1 : 0
 
   name        = "${var.environment}-docker-machine-cache"
   path        = "/"

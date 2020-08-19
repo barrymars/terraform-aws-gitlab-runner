@@ -533,3 +533,8 @@ variable "metrics_public" {
   type        = bool
 }
 
+variable "cache_arn" {
+  description = "ARN of a global shared cache bucket"
+  type        = string
+  default     = ""
+}

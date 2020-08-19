@@ -38,3 +38,9 @@ variable "create_cache_bucket" {
   type        = bool
   default     = true
 }
+
+variable "cache_arn" {
+  description = "ARN of a global shared cache bucket"
+  type        = string
+  default     = ""
+}
